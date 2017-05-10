@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import google_api
+import os
 app = Flask(__name__)
 
 ####################################This is using the Google Places API#############################################
@@ -12,15 +13,6 @@ def index():
 		food = google_api.search_food(address) #
 	return render_template('index.html', food=food) #
 
-# #################################This is using the Weather API#############################################
-
-# @app.route("/")
-# def index():
-# 	address = request.values.get('address') #
-# 	forecast = None 						# initially set it to none
-# 	if address:                             # weather look-up happens only if 'address' variable is set
-# 		forecast = weather.get_weather(address) #
-# 	return render_template('index.html', forecast=forecast) #
 
 ##################################################################################
 @app.route('/about')
@@ -32,4 +24,5 @@ def thanks():
 	return render_template('thanks.html')
 
 if __name__ == "__main__":
-	app.run()
+	port = int(os.environ.get("PORT", 5000))
+	app.run(host="0.0.0.0", port=port)
